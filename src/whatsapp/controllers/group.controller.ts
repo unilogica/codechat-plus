@@ -3,6 +3,7 @@ import {
   GroupJid,
   GroupPictureDto,
   GroupUpdateParticipantDto,
+  GroupToggleEphemeralDto,
 } from '../dto/group.dto';
 import { InstanceDto } from '../dto/instance.dto';
 import { WAMonitoringService } from '../services/monitor.service';
@@ -51,5 +52,11 @@ export class GroupController {
 
   public async leaveGroup(instance: InstanceDto, groupJid: GroupJid) {
     return await this.waMonitor.waInstances[instance.instanceName].leaveGroup(groupJid);
+  }
+
+  public async toggleEphemeral(instance: InstanceDto, update: GroupToggleEphemeralDto) {
+    return await this.waMonitor.waInstances[instance.instanceName].toggleEphemeral(
+      update,
+    );
   }
 }

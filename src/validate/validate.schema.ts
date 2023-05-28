@@ -535,3 +535,17 @@ export const webhookSchema: JSONSchema7 = {
   required: ['url', 'enabled'],
   ...isNotEmpty('url'),
 };
+
+export const toggleEphemeralSchema: JSONSchema7 = {
+  $id: v4(),
+  type: 'object',
+  properties: {
+    groupJid: { type: 'string' },
+    expiration: {
+      type: 'number',
+      enum: [0, 86400, 604800, 7776000],
+    },
+  },
+  required: ['groupJid', 'expiration'],
+  ...isNotEmpty('groupJid', 'expiration'),
+};

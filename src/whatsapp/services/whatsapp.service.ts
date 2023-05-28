@@ -88,6 +88,7 @@ import {
   GroupJid,
   GroupPictureDto,
   GroupUpdateParticipantDto,
+  GroupToggleEphemeralDto,
 } from '../dto/group.dto';
 import { MessageUpQuery } from '../repository/messageUp.repository';
 import { useMultiFileAuthStateDb } from '../../utils/use-multi-file-auth-state-db';
@@ -1404,6 +1405,18 @@ export class WAStartupService {
       return { groupJid: id.groupJid, leave: true };
     } catch (error) {
       throw new BadRequestException('Unable to leave the group', error.toString());
+    }
+  }
+
+  public async toggleEphemeral(update: GroupToggleEphemeralDto) {
+    try {
+      const toggleEphemeral = await this.client.groupToggleEphemeral(
+        update.groupJid,
+        update.expiration,
+      );
+      return { toggleEphemeral: toggleEphemeral };
+    } catch (error) {
+      throw new BadRequestException('Error updating setting', error.toString());
     }
   }
 }
