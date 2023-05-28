@@ -3,6 +3,7 @@ import {
   GroupJid,
   GroupPictureDto,
   GroupUpdateParticipantDto,
+  GroupUpdateSettingDto,
 } from '../dto/group.dto';
 import { InstanceDto } from '../dto/instance.dto';
 import { WAMonitoringService } from '../services/monitor.service';
@@ -51,5 +52,9 @@ export class GroupController {
 
   public async leaveGroup(instance: InstanceDto, groupJid: GroupJid) {
     return await this.waMonitor.waInstances[instance.instanceName].leaveGroup(groupJid);
+  }
+
+  public async updateGSetting(instance: InstanceDto, update: GroupUpdateSettingDto) {
+    return await this.waMonitor.waInstances[instance.instanceName].updateGSetting(update);
   }
 }

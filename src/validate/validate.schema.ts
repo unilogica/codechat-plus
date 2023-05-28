@@ -535,3 +535,17 @@ export const webhookSchema: JSONSchema7 = {
   required: ['url', 'enabled'],
   ...isNotEmpty('url'),
 };
+
+export const updateSettingsSchema: JSONSchema7 = {
+  $id: v4(),
+  type: 'object',
+  properties: {
+    groupJid: { type: 'string' },
+    action: {
+      type: 'string',
+      enum: ['announcement', 'not_announcement', 'locked', 'unlocked'],
+    },
+  },
+  required: ['groupJid', 'action'],
+  ...isNotEmpty('groupJid', 'action'),
+};

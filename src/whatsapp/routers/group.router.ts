@@ -3,6 +3,7 @@ import {
   createGroupSchema,
   groupJidSchema,
   updateParticipantsSchema,
+  updateSettingsSchema,
   updateGroupPicture,
 } from '../../validate/validate.schema';
 import { RouterBroker } from '../abstract/abstract.router';
@@ -11,6 +12,7 @@ import {
   GroupJid,
   GroupPictureDto,
   GroupUpdateParticipantDto,
+  GroupUpdateSettingDto,
 } from '../dto/group.dto';
 import { groupController } from '../whatsapp.module';
 import { HttpStatus } from './index.router';
@@ -86,6 +88,16 @@ export class GroupRouter extends RouterBroker {
           schema: updateParticipantsSchema,
           ClassRef: GroupUpdateParticipantDto,
           execute: (instance, data) => groupController.updateGParticipate(instance, data),
+        });
+
+        res.status(HttpStatus.CREATED).json(response);
+      })
+      .put(this.routerPath('updateSetting'), ...guards, async (req, res) => {
+        const response = await this.groupValidate<GroupUpdateSettingDto>({
+          request: req,
+          schema: updateSettingsSchema,
+          ClassRef: GroupUpdateSettingDto,
+          execute: (instance, data) => groupController.updateGSetting(instance, data),
         });
 
         res.status(HttpStatus.CREATED).json(response);
