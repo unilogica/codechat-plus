@@ -21,3 +21,11 @@ export class GroupUpdateParticipantDto extends GroupJid {
 export class GroupToggleEphemeralDto extends GroupJid {
   expiration: 0 | 86400 | 604800 | 7776000;
 }
+
+export class GroupUpdateSettingDto extends GroupJid {
+  action: 'announcement' | 'not_announcement' | 'unlocked' | 'locked';
+}
+
+export class GroupInvite {
+  inviteCode: string;
+}

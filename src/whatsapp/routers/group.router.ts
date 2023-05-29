@@ -4,15 +4,19 @@ import {
   groupJidSchema,
   updateParticipantsSchema,
   toggleEphemeralSchema,
+  updateSettingsSchema,
   updateGroupPicture,
+  groupInviteSchema,
 } from '../../validate/validate.schema';
 import { RouterBroker } from '../abstract/abstract.router';
 import {
   CreateGroupDto,
   GroupJid,
+  GroupInvite,
   GroupPictureDto,
   GroupUpdateParticipantDto,
   GroupToggleEphemeralDto,
+  GroupUpdateSettingDto,
 } from '../dto/group.dto';
 import { groupController } from '../whatsapp.module';
 import { HttpStatus } from './index.router';
@@ -71,7 +75,16 @@ export class GroupRouter extends RouterBroker {
 
         res.status(HttpStatus.OK).json(response);
       })
+      .get(this.routerPath('inviteInfo'), ...guards, async (req, res) => {
+        const response = await this.inviteCodeValidate<GroupInvite>({
+          request: req,
+          schema: groupInviteSchema,
+          ClassRef: GroupInvite,
+          execute: (instance, data) => groupController.inviteInfo(instance, data),
+        });
 
+        res.status(HttpStatus.OK).json(response);
+      })
       .put(this.routerPath('revokeInviteCode'), ...guards, async (req, res) => {
         const response = await this.groupValidate<GroupJid>({
           request: req,
@@ -98,6 +111,12 @@ export class GroupRouter extends RouterBroker {
           schema: toggleEphemeralSchema,
           ClassRef: GroupToggleEphemeralDto,
           execute: (instance, data) => groupController.toggleEphemeral(instance, data),
+      .put(this.routerPath('updateSetting'), ...guards, async (req, res) => {
+        const response = await this.groupValidate<GroupUpdateSettingDto>({
+          request: req,
+          schema: updateSettingsSchema,
+          ClassRef: GroupUpdateSettingDto,
+          execute: (instance, data) => groupController.updateGSetting(instance, data),
         });
 
         res.status(HttpStatus.CREATED).json(response);

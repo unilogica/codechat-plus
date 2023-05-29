@@ -86,9 +86,11 @@ import {
 import {
   CreateGroupDto,
   GroupJid,
+  GroupInvite,
   GroupPictureDto,
   GroupUpdateParticipantDto,
   GroupToggleEphemeralDto,
+  GroupUpdateSettingDto,
 } from '../dto/group.dto';
 import { MessageUpQuery } from '../repository/messageUp.repository';
 import { useMultiFileAuthStateDb } from '../../utils/use-multi-file-auth-state-db';
@@ -1367,6 +1369,14 @@ export class WAStartupService {
     }
   }
 
+  public async inviteInfo(id: GroupInvite) {
+    try {
+      return await this.client.groupGetInviteInfo(id.inviteCode);
+    } catch (error) {
+      throw new NotFoundException('No invite info', id.inviteCode);
+    }
+  }
+
   public async revokeInviteCode(id: GroupJid) {
     try {
       const inviteCode = await this.client.groupRevokeInvite(id.groupJid);
@@ -1405,6 +1415,18 @@ export class WAStartupService {
       return { groupJid: id.groupJid, leave: true };
     } catch (error) {
       throw new BadRequestException('Unable to leave the group', error.toString());
+    }
+  }
+
+  public async updateGSetting(update: GroupUpdateSettingDto) {
+    try {
+      const updateSetting = await this.client.groupSettingUpdate(
+        update.groupJid,
+        update.action,
+      );
+      return { updateSetting: updateSetting };
+    } catch (error) {
+      throw new BadRequestException('Error updating setting', error.toString());
     }
   }
 
