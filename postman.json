@@ -995,6 +995,35 @@
             "response": []
           },
           {
+            "name": "Invite Info",
+            "id": "851b93e1-0ab2-43c3-8ce9-0248deee6169",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{baseUrl}}/group/inviteInfo/{{instance}}?inviteCode={{inviteCode}}",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "group",
+                  "inviteInfo",
+                  "{{instance}}"
+                ],
+                "query": [
+                  {
+                    "key": "inviteCode",
+                    "value": "{{inviteCode}}"
+                  }
+                ]
+              }
+            },
+            "response": []
+          },
+          {
             "name": "Revoke Invite Code",
             "id": "67291926-2d3e-4b97-911f-7f2760761681",
             "protocolProfileBehavior": {

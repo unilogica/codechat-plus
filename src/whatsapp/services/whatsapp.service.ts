@@ -86,6 +86,7 @@ import {
 import {
   CreateGroupDto,
   GroupJid,
+  GroupInvite,
   GroupPictureDto,
   GroupUpdateParticipantDto,
 } from '../dto/group.dto';
@@ -1363,6 +1364,14 @@ export class WAStartupService {
       return { inviteUrl: `https://chat.whatsapp.com/${code}`, inviteCode: code };
     } catch (error) {
       throw new NotFoundException('No invite code', error.toString());
+    }
+  }
+
+  public async inviteInfo(id: GroupInvite) {
+    try {
+      return await this.client.groupGetInviteInfo(id.inviteCode);
+    } catch (error) {
+      throw new NotFoundException('No invite info', id.inviteCode);
     }
   }
 

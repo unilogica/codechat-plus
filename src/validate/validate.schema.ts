@@ -535,3 +535,13 @@ export const webhookSchema: JSONSchema7 = {
   required: ['url', 'enabled'],
   ...isNotEmpty('url'),
 };
+
+export const groupInviteSchema: JSONSchema7 = {
+  $id: v4(),
+  type: 'object',
+  properties: {
+    inviteCode: { type: 'string', pattern: '^[a-zA-Z0-9]{22}$' },
+  },
+  required: ['inviteCode'],
+  ...isNotEmpty('inviteCode'),
+};

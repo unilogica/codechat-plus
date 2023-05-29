@@ -17,3 +17,7 @@ export class GroupUpdateParticipantDto extends GroupJid {
   action: 'add' | 'remove' | 'promote' | 'demote';
   participants: string[];
 }
+
+export class GroupInvite {
+  inviteCode: string;
+}
