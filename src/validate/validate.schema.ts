@@ -550,6 +550,20 @@ export const updateSettingsSchema: JSONSchema7 = {
   ...isNotEmpty('groupJid', 'action'),
 };
 
+export const toggleEphemeralSchema: JSONSchema7 = {
+  $id: v4(),
+  type: 'object',
+  properties: {
+    groupJid: { type: 'string' },
+    expiration: { 
+      type: 'number',
+      enum: [0, 86400, 604800, 7776000],
+    },
+  },
+  required: ['groupJid', 'expiration'],
+  ...isNotEmpty('groupJid', 'expiration'),
+};
+
 export const groupInviteSchema: JSONSchema7 = {
   $id: v4(),
   type: 'object',
@@ -558,5 +572,4 @@ export const groupInviteSchema: JSONSchema7 = {
   },
   required: ['inviteCode'],
   ...isNotEmpty('inviteCode'),
-
 };

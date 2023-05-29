@@ -89,6 +89,7 @@ import {
   GroupInvite,
   GroupPictureDto,
   GroupUpdateParticipantDto,
+  GroupToggleEphemeralDto,
   GroupUpdateSettingDto,
 } from '../dto/group.dto';
 import { MessageUpQuery } from '../repository/messageUp.repository';
@@ -1424,6 +1425,18 @@ export class WAStartupService {
         update.action,
       );
       return { updateSetting: updateSetting };
+    } catch (error) {
+      throw new BadRequestException('Error updating setting', error.toString());
+    }
+  }
+
+  public async toggleEphemeral(update: GroupToggleEphemeralDto) {
+    try {
+      const toggleEphemeral = await this.client.groupToggleEphemeral(
+        update.groupJid,
+        update.expiration,
+      );
+      return { toggleEphemeral: toggleEphemeral };
     } catch (error) {
       throw new BadRequestException('Error updating setting', error.toString());
     }
