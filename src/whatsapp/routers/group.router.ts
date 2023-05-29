@@ -105,18 +105,22 @@ export class GroupRouter extends RouterBroker {
 
         res.status(HttpStatus.CREATED).json(response);
       })
-      .put(this.routerPath('toggleEphemeral'), ...guards, async (req, res) => {
-        const response = await this.groupValidate<GroupToggleEphemeralDto>({
-          request: req,
-          schema: toggleEphemeralSchema,
-          ClassRef: GroupToggleEphemeralDto,
-          execute: (instance, data) => groupController.toggleEphemeral(instance, data),
       .put(this.routerPath('updateSetting'), ...guards, async (req, res) => {
         const response = await this.groupValidate<GroupUpdateSettingDto>({
           request: req,
           schema: updateSettingsSchema,
           ClassRef: GroupUpdateSettingDto,
           execute: (instance, data) => groupController.updateGSetting(instance, data),
+        });
+
+        res.status(HttpStatus.CREATED).json(response);
+      })
+      .put(this.routerPath('toggleEphemeral'), ...guards, async (req, res) => {
+        const response = await this.groupValidate<GroupToggleEphemeralDto>({
+          request: req,
+          schema: toggleEphemeralSchema,
+          ClassRef: GroupToggleEphemeralDto,
+          execute: (instance, data) => groupController.toggleEphemeral(instance, data),
         });
 
         res.status(HttpStatus.CREATED).json(response);
