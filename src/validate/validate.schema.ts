@@ -535,3 +535,41 @@ export const webhookSchema: JSONSchema7 = {
   required: ['url', 'enabled'],
   ...isNotEmpty('url'),
 };
+
+export const updateSettingsSchema: JSONSchema7 = {
+  $id: v4(),
+  type: 'object',
+  properties: {
+    groupJid: { type: 'string' },
+    action: {
+      type: 'string',
+      enum: ['announcement', 'not_announcement', 'locked', 'unlocked'],
+    },
+  },
+  required: ['groupJid', 'action'],
+  ...isNotEmpty('groupJid', 'action'),
+};
+
+export const toggleEphemeralSchema: JSONSchema7 = {
+  $id: v4(),
+  type: 'object',
+  properties: {
+    groupJid: { type: 'string' },
+    expiration: { 
+      type: 'number',
+      enum: [0, 86400, 604800, 7776000],
+    },
+  },
+  required: ['groupJid', 'expiration'],
+  ...isNotEmpty('groupJid', 'expiration'),
+};
+
+export const groupInviteSchema: JSONSchema7 = {
+  $id: v4(),
+  type: 'object',
+  properties: {
+    inviteCode: { type: 'string', pattern: '^[a-zA-Z0-9]{22}$' },
+  },
+  required: ['inviteCode'],
+  ...isNotEmpty('inviteCode'),
+};
