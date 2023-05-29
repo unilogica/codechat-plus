@@ -1091,6 +1091,44 @@
             "response": []
           },
           {
+            "name": "Update Setting",
+            "id": "403820ea-e5c9-4292-b02f-098b899e6bc3",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "PUT",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n  \"action\": \"'announcement', 'not_announcement', 'locked', 'unlocked'\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/group/updateSetting/{{instance}}?groupJid={{groupJid}}",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "group",
+                  "updateSetting",
+                  "{{instance}}"
+                ],
+                "query": [
+                  {
+                    "key": "groupJid",
+                    "value": "{{groupJid}}"
+                  }
+                ]
+              }
+            },
+            "response": []
+          },
+          {
             "name": "Leave Group",
             "id": "4918cfc2-7b8c-483b-80a6-ee6c977f0772",
             "protocolProfileBehavior": {

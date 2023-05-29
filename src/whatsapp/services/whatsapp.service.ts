@@ -89,6 +89,7 @@ import {
   GroupInvite,
   GroupPictureDto,
   GroupUpdateParticipantDto,
+  GroupUpdateSettingDto,
 } from '../dto/group.dto';
 import { MessageUpQuery } from '../repository/messageUp.repository';
 import { useMultiFileAuthStateDb } from '../../utils/use-multi-file-auth-state-db';
@@ -1413,6 +1414,18 @@ export class WAStartupService {
       return { groupJid: id.groupJid, leave: true };
     } catch (error) {
       throw new BadRequestException('Unable to leave the group', error.toString());
+    }
+  }
+
+  public async updateGSetting(update: GroupUpdateSettingDto) {
+    try {
+      const updateSetting = await this.client.groupSettingUpdate(
+        update.groupJid,
+        update.action,
+      );
+      return { updateSetting: updateSetting };
+    } catch (error) {
+      throw new BadRequestException('Error updating setting', error.toString());
     }
   }
 }

@@ -536,6 +536,20 @@ export const webhookSchema: JSONSchema7 = {
   ...isNotEmpty('url'),
 };
 
+export const updateSettingsSchema: JSONSchema7 = {
+  $id: v4(),
+  type: 'object',
+  properties: {
+    groupJid: { type: 'string' },
+    action: {
+      type: 'string',
+      enum: ['announcement', 'not_announcement', 'locked', 'unlocked'],
+    },
+  },
+  required: ['groupJid', 'action'],
+  ...isNotEmpty('groupJid', 'action'),
+};
+
 export const groupInviteSchema: JSONSchema7 = {
   $id: v4(),
   type: 'object',
@@ -544,4 +558,5 @@ export const groupInviteSchema: JSONSchema7 = {
   },
   required: ['inviteCode'],
   ...isNotEmpty('inviteCode'),
+
 };

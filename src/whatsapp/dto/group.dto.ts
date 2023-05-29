@@ -18,6 +18,10 @@ export class GroupUpdateParticipantDto extends GroupJid {
   participants: string[];
 }
 
+export class GroupUpdateSettingDto extends GroupJid {
+  action: 'announcement' | 'not_announcement' | 'unlocked' | 'locked';
+}
+
 export class GroupInvite {
   inviteCode: string;
 }
