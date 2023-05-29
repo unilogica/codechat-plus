@@ -4,11 +4,13 @@ import {
   groupJidSchema,
   updateParticipantsSchema,
   updateGroupPicture,
+  groupInviteSchema,
 } from '../../validate/validate.schema';
 import { RouterBroker } from '../abstract/abstract.router';
 import {
   CreateGroupDto,
   GroupJid,
+  GroupInvite,
   GroupPictureDto,
   GroupUpdateParticipantDto,
 } from '../dto/group.dto';
@@ -69,7 +71,16 @@ export class GroupRouter extends RouterBroker {
 
         res.status(HttpStatus.OK).json(response);
       })
+      .get(this.routerPath('inviteInfo'), ...guards, async (req, res) => {
+        const response = await this.inviteCodeValidate<GroupInvite>({
+          request: req,
+          schema: groupInviteSchema,
+          ClassRef: GroupInvite,
+          execute: (instance, data) => groupController.inviteInfo(instance, data),
+        });
 
+        res.status(HttpStatus.OK).json(response);
+      })
       .put(this.routerPath('revokeInviteCode'), ...guards, async (req, res) => {
         const response = await this.groupValidate<GroupJid>({
           request: req,
