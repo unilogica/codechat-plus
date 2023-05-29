@@ -21,3 +21,7 @@ export class GroupUpdateParticipantDto extends GroupJid {
 export class GroupUpdateSettingDto extends GroupJid {
   action: 'announcement' | 'not_announcement' | 'unlocked' | 'locked';
 }
+
+export class GroupInvite {
+  inviteCode: string;
+}

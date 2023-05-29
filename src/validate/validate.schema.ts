@@ -549,3 +549,14 @@ export const updateSettingsSchema: JSONSchema7 = {
   required: ['groupJid', 'action'],
   ...isNotEmpty('groupJid', 'action'),
 };
+
+export const groupInviteSchema: JSONSchema7 = {
+  $id: v4(),
+  type: 'object',
+  properties: {
+    inviteCode: { type: 'string', pattern: '^[a-zA-Z0-9]{22}$' },
+  },
+  required: ['inviteCode'],
+  ...isNotEmpty('inviteCode'),
+
+};
