@@ -427,7 +427,7 @@ export class WAStartupService {
         browser,
         version,
         connectTimeoutMs: 60_000,
-        qrTimeout: 10_000,
+        qrTimeout: 40_000,
         emitOwnEvents: false,
         msgRetryCounterCache: this.msgRetryCounterCache,
         getMessage: this.getMessage as any,
@@ -436,7 +436,11 @@ export class WAStartupService {
         userDevicesCache: this.userDevicesCache,
         transactionOpts: { maxCommitRetries: 1, delayBetweenTriesMs: 10 },
         patchMessageBeforeSending: (message) => {
-          const requiresPatch = !!(message.buttonsMessage || message.listMessage);
+          const requiresPatch = !!(
+            message.buttonsMessage ||
+            message.listMessage ||
+            message.templateMessage
+          );
           if (requiresPatch) {
             message = {
               viewOnceMessageV2: {
@@ -580,11 +584,7 @@ export class WAStartupService {
         where: { owner: this.instance.wuid },
       });
       for await (const [, m] of Object.entries(messages)) {
-        if (
-          m.message?.protocolMessage ||
-          m.message?.senderKeyDistributionMessage ||
-          !m.message
-        ) {
+        if (!m.message) {
           continue;
         }
         if (
@@ -628,12 +628,7 @@ export class WAStartupService {
       database: Database,
     ) => {
       const received = messages[0];
-      if (
-        type !== 'notify' ||
-        !received?.message ||
-        received.message?.protocolMessage ||
-        received.message.senderKeyDistributionMessage
-      ) {
+      if (type !== 'notify' || !received?.message) {
         return;
       }
 
